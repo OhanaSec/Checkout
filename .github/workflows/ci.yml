@@ -39,6 +39,16 @@ jobs:
           ARTIFEX_ADAPTER_E2E: "1"
           ARTIFEX_PG_DSN: postgres://artifex_test:test_only_password@localhost:5432/artifex_adapter_e2e?sslmode=disable
         run: go test ./server -run '^TestAgentAdapterE2E$' -count=1 -v
+  api-recon-scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+      - name: TLS-verification regression tests (no browser, no network)
+        run: npm test
+        working-directory: skills/api-recon/scripts
   frontend:
     runs-on: ubuntu-latest
     steps:
